@@ -1,37 +1,13 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  Outlet,
-  RouterProvider,
-} from 'react-router';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router';
+import HomePage from '../pages/HomePage';
+import GuestLayout from '../layouts/GuestLayout';
+import UserLayout from '../layouts/UserLayout';
+import AdminLayout from '../layouts/AdminLayout';
+
+import courseService from '@/services/course.service';
+import CourseDetailPage from '@/pages/CourseDetailPage';
 
 // ---- Layouts ----
-function GuestLayout() {
-  return (
-    <>
-      <p className="p-4 border-b">Guest Header</p>
-      <Outlet />
-    </>
-  );
-}
-
-function UserLayout() {
-  return (
-    <>
-      <p className="p-4 border-b">User Header</p>
-      <Outlet />
-    </>
-  );
-}
-
-function AdminLayout() {
-  return (
-    <>
-      <p className="p-4 border-b bg-black text-white">Admin Panel</p>
-      <Outlet />
-    </>
-  );
-}
 
 // ---- Routers ----
 const guestRouter = [
@@ -39,13 +15,21 @@ const guestRouter = [
     path: '/',
     element: <GuestLayout />,
     children: [
-      { path: '', element: <p>Public Home</p> },
-      { path: 'login', element: <p>Login Page</p> },
-      { path: 'register', element: <p>Register Page</p> },
+      {
+        path: '',
+        element: <HomePage />,
+        loader: courseService.getAll,
+        hydrateFallbackElement: <div>Loading...</div>,
+      },
 
       // public course browsing
       { path: 'courses', element: <p>Course List</p> },
-      { path: 'courses/:id', element: <p>Course Detail</p> },
+      {
+        path: 'courses/:id',
+        element: <CourseDetailPage />,
+        loader: courseService.getById,
+        hydrateFallbackElement: <div>Loading...</div>,
+      },
 
       { path: '*', element: <Navigate to="/" /> },
     ],

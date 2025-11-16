@@ -1,7 +1,10 @@
+import { Outlet } from 'react-router';
+import Header from '../components/Header';
+
 export default function GuestLayout() {
   return (
     <>
-      <header className="p-4 border-b">Guest Header</header>
+      <Header />
       <Outlet />
     </>
   );

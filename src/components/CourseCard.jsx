@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { MapPin, Star, Heart, Users } from 'lucide-react';
+import { Link } from 'react-router';
 
 export default function CourseCard({ course, onCourseClick }) {
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const handleCardClick = () => {
-    if (onCourseClick) onCourseClick(course);
-  };
 
   const handleBookNow = (e) => {
     e.stopPropagation();
@@ -14,14 +11,14 @@ export default function CourseCard({ course, onCourseClick }) {
   };
 
   return (
-    <div
-      onClick={handleCardClick}
+    <Link
+      to={`/courses/${course.id}`}
       className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100 cursor-pointer"
     >
       {/* Image */}
       <div className="h-40 overflow-hidden relative group">
         <img
-          src={course.image}
+          src={course.images[0]?.imageUrl}
           alt={course.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
@@ -105,6 +102,6 @@ export default function CourseCard({ course, onCourseClick }) {
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

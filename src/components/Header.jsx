@@ -11,6 +11,8 @@ import {
   UserPlus, // ยังคง import ไว้ แต่ไม่ได้ใช้แล้วในส่วน Header
 } from 'lucide-react';
 import LoginDialog from './LoginDialog';
+import AuthButton from './buttons/AuthButton';
+import ContactButton from './buttons/ContactButton';
 
 export default function Header() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -50,23 +52,16 @@ export default function Header() {
           {/* RIGHT SECTION (Language / Contact / Sign In) */}
           <div className="flex items-center gap-6 text-gray-700">
             <MenuItem icon={<Globe size={18} />} label="EN" />
-            <MenuItem icon={<Phone size={18} />} label="Contact" />
+            <ContactButton />
 
             {/* SIGN IN BUTTON */}
-            <button
-              onClick={() => {
+            <AuthButton
+              onLogin={() => {
                 // หากต้องการให้ปุ่ม Sign In เปิดไปที่ Tab Login เสมอ
                 setDefaultTab('login');
                 setIsLoginOpen(true);
               }}
-              className="flex items-center gap-2 bg-green-600 text-white px-5 py-2 rounded-full hover:bg-green-700"
-            >
-              <User size={18} />
-              Sign In
-            </button>
-
-            {/* ปุ่ม REGISTER BUTTON ถูกนำออกไปแล้วตามคำขอ
-             */}
+            />
           </div>
         </div>
       </header>
@@ -81,7 +76,7 @@ export default function Header() {
   );
 }
 
-function MenuItem({ icon, label }) {
+export function MenuItem({ icon, label }) {
   return (
     <div className="flex items-center gap-2 cursor-pointer hover:text-green-600 transition">
       {icon}
